@@ -24,73 +24,76 @@ import core.ui.components.drawVerticalScrollbar
 
 @Composable
 fun ChatListView(chatList: List<Chat>, newChatList: List<Chat>, onLike: (String) -> Unit) {
-  val listState = rememberLazyListState()
-  val density = LocalDensity.current
+    val listState = rememberLazyListState()
+    val density = LocalDensity.current
 
-  LaunchedEffect(newChatList.size) {
-    if (newChatList.isNotEmpty()) {
-      val extraOffset = with(density) { 100.dp.toPx().toInt() }
-      listState.animateScrollToItem(index = newChatList.lastIndex, scrollOffset = extraOffset)
+    LaunchedEffect(newChatList.size) {
+        if (newChatList.isNotEmpty()) {
+            val extraOffset = with(density) { 100.dp.toPx().toInt() }
+            listState.animateScrollToItem(index = newChatList.lastIndex, scrollOffset = extraOffset)
+        }
     }
-  }
-  LazyColumn(
-    state = listState,
-    modifier = Modifier.fillMaxSize().drawVerticalScrollbar(listState),
-    verticalArrangement = Arrangement.spacedBy(size_12)
-  ) {
-    items(chatList) {
-      when (it.type) {
-        ChatType.SEND -> ChatSentCard(
-          modifier = Modifier.fillMaxWidth().padding(start = size_32).offset(x = -size_16),
-          id = it.id,
-          dateTime = it.dateTime,
-          message = it.message,
-          isLiked = it.isLiked,
-          likes = it.likes,
-        ) {
-          onLike(it)
+    LazyColumn(
+        state = listState,
+        modifier = Modifier.fillMaxSize()
+            .drawVerticalScrollbar(listState, bottomPaddingOffset = 40f),
+        verticalArrangement = Arrangement.spacedBy(size_12)
+    ) {
+        items(chatList) {
+            when (it.type) {
+                ChatType.SEND -> ChatSentCard(
+                    modifier = Modifier.fillMaxWidth().padding(start = size_32)
+                        .offset(x = -size_16),
+                    id = it.id,
+                    dateTime = it.dateTime,
+                    message = it.message,
+                    isLiked = it.isLiked,
+                    likes = it.likes,
+                ) {
+                    onLike(it)
+                }
+
+                ChatType.RECEIVED -> ChatReceiveCard(
+                    modifier = Modifier.fillMaxWidth().padding(end = size_32),
+                    id = it.id,
+                    dateTime = it.dateTime,
+                    message = it.message,
+                    isLiked = it.isLiked,
+                    likes = it.likes,
+                ) {
+                    onLike(it)
+                }
+            }
+
+        }
+        items(newChatList) {
+            when (it.type) {
+                ChatType.SEND -> ChatSentCard(
+                    modifier = Modifier.fillMaxWidth().padding(start = size_32)
+                        .offset(x = -size_16),
+                    id = it.id,
+                    dateTime = it.dateTime,
+                    message = it.message,
+                    isLiked = it.isLiked,
+                    likes = it.likes,
+                ) {
+                    onLike(it)
+                }
+
+                ChatType.RECEIVED -> ChatReceiveCard(
+                    modifier = Modifier.fillMaxWidth().padding(end = size_32),
+                    id = it.id,
+                    dateTime = it.dateTime,
+                    message = it.message,
+                    isLiked = it.isLiked,
+                    likes = it.likes,
+                ) {
+                    onLike(it)
+                }
+            }
+
         }
 
-        ChatType.RECEIVED -> ChatReceiveCard(
-          modifier = Modifier.fillMaxWidth().padding(end = size_32),
-          id = it.id,
-          dateTime = it.dateTime,
-          message = it.message,
-          isLiked = it.isLiked,
-          likes = it.likes,
-        ) {
-          onLike(it)
-        }
-      }
 
     }
-    items(newChatList) {
-      when (it.type) {
-        ChatType.SEND -> ChatSentCard(
-          modifier = Modifier.fillMaxWidth().padding(start = size_32).offset(x = -size_16),
-          id = it.id,
-          dateTime = it.dateTime,
-          message = it.message,
-          isLiked = it.isLiked,
-          likes = it.likes,
-        ) {
-          onLike(it)
-        }
-
-        ChatType.RECEIVED -> ChatReceiveCard(
-          modifier = Modifier.fillMaxWidth().padding(end = size_32),
-          id = it.id,
-          dateTime = it.dateTime,
-          message = it.message,
-          isLiked = it.isLiked,
-          likes = it.likes,
-        ) {
-          onLike(it)
-        }
-      }
-
-    }
-
-
-  }
 }

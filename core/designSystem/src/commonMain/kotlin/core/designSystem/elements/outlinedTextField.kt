@@ -105,7 +105,7 @@ fun SimpleOutlinedTextField(
     enabled = enabled,
     placeholder = {
       if (value.isEmpty()) {
-        Text(text = hint ?: "", color = colors.onSurfaceVariant)
+        Text(text = hint ?: "", color = colors.onSurfaceVariant, style  = typography.body.DefaultRegular)
       }
     },
     leadingIcon = leadingIcon?.let {

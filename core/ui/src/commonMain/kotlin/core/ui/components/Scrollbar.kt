@@ -49,15 +49,16 @@ private fun Modifier.drawScrollbar(
 }
 
 fun Modifier.drawHorizontalScrollbar(
-  state: LazyListState, reverseScrolling: Boolean = false
-): Modifier = drawScrollbar(state, Orientation.Horizontal, reverseScrolling)
+  state: LazyListState, reverseScrolling: Boolean = false, bottomPaddingOffset: Float = 0f
+): Modifier = drawScrollbar(state, Orientation.Horizontal, reverseScrolling, bottomPaddingOffset)
 
 fun Modifier.drawVerticalScrollbar(
-  state: LazyListState, reverseScrolling: Boolean = false
-): Modifier = drawScrollbar(state, Orientation.Vertical, reverseScrolling)
+  state: LazyListState, reverseScrolling: Boolean = false, bottomPaddingOffset: Float = 0f
+): Modifier = drawScrollbar(state, Orientation.Vertical, reverseScrolling, bottomPaddingOffset)
 
 private fun Modifier.drawScrollbar(
-  state: LazyListState, orientation: Orientation, reverseScrolling: Boolean
+  state: LazyListState, orientation: Orientation, reverseScrolling: Boolean,
+  bottomPaddingOffset: Float
 ): Modifier = drawScrollbar(
   orientation, reverseScrolling
 ) { reverseDirection, atEnd, color, alpha ->
@@ -72,7 +73,7 @@ private fun Modifier.drawScrollbar(
     val thumbSize = viewportSize / totalSize * canvasSize
     val startOffset = if (items.isEmpty()) 0f else items.first().run {
       (estimatedItemSize * index - offset) / totalSize * canvasSize
-    }
+    } - bottomPaddingOffset
     drawScrollbar(
       orientation, reverseDirection, atEnd, color, alpha, thumbSize, startOffset
     )
@@ -97,7 +98,7 @@ private fun DrawScope.drawScrollbar(
   } else {
     Offset(
       if (atEnd) size.width - thicknessPx else 0f,
-      if (reverseDirection) size.height - startOffset - thumbSize else startOffset
+      (if (reverseDirection) size.height - startOffset - thumbSize else startOffset)
     )
   }
   val size = if (orientation == Orientation.Horizontal) {

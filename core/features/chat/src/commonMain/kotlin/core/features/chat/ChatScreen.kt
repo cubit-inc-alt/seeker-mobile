@@ -6,15 +6,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -34,24 +31,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.findRootCoordinates
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import core.designSystem.elements.SimpleOutlinedTextField
 import core.designSystem.theme.AppDimensions.size_12
 import core.designSystem.theme.AppDimensions.size_16
@@ -69,10 +61,12 @@ import core.resources.generated.resources.ic_achievement
 import core.resources.generated.resources.ic_close
 import core.resources.generated.resources.ic_info
 import core.resources.generated.resources.ic_send
+import core.resources.generated.resources.ic_send_enabled
 import core.resources.generated.resources.ic_speech_recognization
 import core.resources.generated.resources.post_restriction_notice
 import core.resources.generated.resources.seeker
 import core.resources.generated.resources.send_message
+import core.resources.generated.resources.you_can_message_again_in
 import core.ui.navigation.AppNavigation
 import core.ui.rememberMutableStateOf
 import kotlinx.coroutines.launch
@@ -86,10 +80,16 @@ fun ChatScreen(
     val state by viewModel.state.collectAsState()
     val chatList by viewModel.chatList.collectAsState()
     val newChatList by viewModel.newChatList.collectAsState()
+    val remainingTime by viewModel.remainingTime.collectAsState()
     var inputMessage by rememberMutableStateOf("")
-    var showTimeWarning by rememberMutableStateOf(true)
+    var showTimeWarning by rememberMutableStateOf<Boolean?>(false)
 
     val focusManager = LocalFocusManager.current
+    LaunchedEffect(state.sendMessageEnable) {
+        state.sendMessageEnable.actUpOn {
+            showTimeWarning = !it
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize().clickable(
@@ -118,7 +118,7 @@ fun ChatScreen(
                             )
                         )
                 )
-                if (showTimeWarning) {
+                if (showTimeWarning == true) {
                     Row(
                         Modifier.fillMaxWidth().wrapContentHeight().padding(size_16),
                         verticalAlignment = Alignment.CenterVertically,
@@ -143,7 +143,7 @@ fun ChatScreen(
                             painter = painterResource(Res.drawable.ic_close),
                             contentDescription = "",
                             modifier = Modifier.wrapContentHeight()
-                                .clickable { showTimeWarning = false },
+                                .clickable { showTimeWarning = null },
                         )
                     }
                     HorizontalDivider()
@@ -159,24 +159,30 @@ fun ChatScreen(
                     SimpleOutlinedTextField(
                         value = inputMessage,
                         label = null,
-                        hint = stringResource(Res.string.send_message),
+                        hint = if (showTimeWarning != false)
+                            stringResource(resource = Res.string.you_can_message_again_in) + " $remainingTime s"
+                        else stringResource(Res.string.send_message),
                         onValueChange = {
                             inputMessage = it
                         },
+                        enabled = showTimeWarning == false,
                         modifier = Modifier.weight(1f).wrapContentHeight(),
                         trailingIcon = {
                             Icon(
                                 painter = painterResource(Res.drawable.ic_speech_recognization),
                                 contentDescription = "",
                                 Modifier.clickable {
-                               })
+                                })
                         },
                     )
                     Image(
-                        painter = painterResource(Res.drawable.ic_send),
+                        painter = if (inputMessage.isNotEmpty()) painterResource(Res.drawable.ic_send_enabled) else painterResource(
+                            Res.drawable.ic_send
+                        ),
                         contentDescription = "",
                         modifier = Modifier.clickable {
-                            viewModel.sendMessage(inputMessage)
+                            if (inputMessage.isNotEmpty())
+                                viewModel.sendMessage(inputMessage)
                             inputMessage = ""
                         })
 
@@ -279,16 +285,3 @@ fun ChatScreen(
     }
 }
 
-
-fun Modifier.positionAwareImePadding() = composed {
-    var consumePadding by remember { mutableIntStateOf(0) }
-    this@positionAwareImePadding
-        .onGloballyPositioned { coordinates ->
-            val rootCoordinate = coordinates.findRootCoordinates()
-            val bottom = coordinates.positionInWindow().y + coordinates.size.height
-
-            consumePadding = (rootCoordinate.size.height - bottom).toInt()
-        }
-        .consumeWindowInsets(PaddingValues(bottom = consumePadding.dp))
-        .imePadding()
-}

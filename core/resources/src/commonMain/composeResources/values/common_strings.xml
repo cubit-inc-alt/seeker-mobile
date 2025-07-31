@@ -10,5 +10,6 @@
   <string name="forum">Forum</string>
   <string name="coin_flip">Coin Flip</string>
   <string name="post_restriction_notice">You can post once per minute in this chat.</string>
+  <string name="you_can_message_again_in">You can message again in</string>
   <string name="send_message">Send a message...</string>
 </resources>
