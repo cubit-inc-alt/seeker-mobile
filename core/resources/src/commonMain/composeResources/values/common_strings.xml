@@ -2,8 +2,13 @@
 
     <string name="app_name">App</string>
 
-    <!--Api  Error Messages -->
-    <string name="operation_completed_successfully">Operation completed successfully</string>
-    <string name="you_are_not_authorized_to_perform_this_action">You are not authorized to perform this action</string>
-
+  <!--Api  Error Messages -->
+  <string name="operation_completed_successfully">Operation completed successfully</string>
+  <string name="you_are_not_authorized_to_perform_this_action">You are not authorized to perform this action</string>
+  <string name="seeker">Seeker</string>
+  <string name="banter">Banter</string>
+  <string name="forum">Forum</string>
+  <string name="coin_flip">Coin Flip</string>
+  <string name="post_restriction_notice">You can post once per minute in this chat.</string>
+  <string name="send_message">Send a message...</string>
 </resources>

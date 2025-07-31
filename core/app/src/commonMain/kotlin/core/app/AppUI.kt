@@ -1,14 +1,11 @@
 package core.app
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,7 +15,7 @@ import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import coil3.util.DebugLogger
 import core.designSystem.theme.AppTheme
-import core.features.welcome.WelcomeScreen
+import core.features.main.MainBottomNavScreen
 import core.ui.components.toast.ToastHost
 import core.ui.navigation.AppNavigation
 
@@ -40,11 +37,10 @@ fun AppUI(viewModel: AppUIViewModel) {
     Box(Modifier.fillMaxSize()) {
       ToastHost {
         NavHost(
-          navController = navigator,
-          startDestination = AppNavigation.WelcomeScreen
+          navController = navigator, startDestination = AppNavigation.ChatScreen
         ) {
-          composable<AppNavigation.WelcomeScreen> {
-            WelcomeScreen()
+          composable<AppNavigation.ChatScreen> {
+            MainBottomNavScreen {}
           }
         }
       }

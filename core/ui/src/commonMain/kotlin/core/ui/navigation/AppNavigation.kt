@@ -6,6 +6,10 @@ import kotlinx.serialization.Serializable
 sealed interface AppNavigation {
 
   @Serializable
-  data object WelcomeScreen : AppNavigation
+  data object ChatScreen : AppNavigation
+  @Serializable
+  data object Forum : AppNavigation
+  @Serializable
+  data object CoinFlip : AppNavigation
 
 }

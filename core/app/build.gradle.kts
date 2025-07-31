@@ -16,7 +16,8 @@ kotlin {
     implementation(projects.core.components.coil)
 
 
-    implementation(projects.core.features.welcome)
+    implementation(projects.core.features.chat)
+    implementation(projects.core.features.main)
 
   }
 
