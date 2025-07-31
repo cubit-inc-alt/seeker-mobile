@@ -6,7 +6,7 @@ import androidx.compose.runtime.compositionLocalOf
 
 
 internal val LocalAppColors = compositionLocalOf<AppColors> {
-    error("PandaColors is not provided")
+    error("AppColors is not provided")
 }
 
 internal val LocalThemeMode = compositionLocalOf<ThemeMode> {

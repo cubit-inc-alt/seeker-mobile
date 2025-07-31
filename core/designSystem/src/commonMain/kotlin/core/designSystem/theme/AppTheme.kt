@@ -15,59 +15,59 @@ import androidx.compose.runtime.remember
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTheme(
-    userThemeMode: UserThemeMode = UserThemeMode.System,
-    content: @Composable () -> Unit
+  userThemeMode: UserThemeMode = UserThemeMode.System,
+  content: @Composable () -> Unit
 ) {
-    val isSystemInDarkTheme = isSystemInDarkTheme()
+  val isSystemInDarkTheme = isSystemInDarkTheme()
 
-    val themeMode = remember(userThemeMode, isSystemInDarkTheme) {
-        when (userThemeMode) {
-            UserThemeMode.System ->
-                if (isSystemInDarkTheme) {
-                    ThemeMode.Dark
-                } else {
-                    ThemeMode.Light
-                }
-
-            UserThemeMode.Light -> ThemeMode.Light
-            UserThemeMode.Dark -> ThemeMode.Dark
-            UserThemeMode.Black -> ThemeMode.Black
+  val themeMode = remember(userThemeMode, isSystemInDarkTheme) {
+    when (userThemeMode) {
+      UserThemeMode.System ->
+        if (isSystemInDarkTheme) {
+          ThemeMode.Dark
+        } else {
+          ThemeMode.Light
         }
+
+      UserThemeMode.Light -> ThemeMode.Light
+      UserThemeMode.Dark -> ThemeMode.Dark
+      UserThemeMode.Black -> ThemeMode.Black
     }
+  }
 
-    val colors = remember(themeMode) {
-        when (themeMode) {
-            ThemeMode.Light -> AppColors.light
-            ThemeMode.Dark -> AppColors.dark
-            ThemeMode.Black -> AppColors.black
-        }
+  val colors = remember(themeMode) {
+    when (themeMode) {
+      ThemeMode.Light -> AppColors.light
+      ThemeMode.Dark -> AppColors.dark
+      ThemeMode.Black -> AppColors.black
     }
+  }
 
 
 
-    CompositionLocalProvider(
-        LocalThemeMode provides themeMode,
-        LocalUserThemeMode provides userThemeMode,
-        LocalAppColors provides colors,
-        LocalAppTypography provides PandaFontTypography,
-    ) {
-        //comment this for preview
-        SyncOsTheme(AppTheme.userTheme, AppTheme.themeMode)
-        MaterialTheme (colorScheme = appColorScheme){
-            CompositionLocalProvider(
-                LocalRippleConfiguration provides RippleConfiguration(
-                    rippleAlpha = RippleAlpha(
-                        pressedAlpha = 0.10f,
-                        focusedAlpha = 0.12f,
-                        draggedAlpha = 0.08f,
-                        hoveredAlpha = 0.04f,
-                    ),
-                    color = colors.primary
-                ),
-                LocalTextStyle provides AppTheme.typography.body.MediumNormal,
-            ) {
-                content()
-            }
-        }
+  CompositionLocalProvider(
+    LocalThemeMode provides themeMode,
+    LocalUserThemeMode provides userThemeMode,
+    LocalAppColors provides colors,
+    LocalAppTypography provides BanterChatFlipTypography,
+  ) {
+    //comment this for preview
+    SyncOsTheme(AppTheme.userTheme, AppTheme.themeMode)
+    MaterialTheme(colorScheme = appColorScheme) {
+      CompositionLocalProvider(
+        LocalRippleConfiguration provides RippleConfiguration(
+          rippleAlpha = RippleAlpha(
+            pressedAlpha = 0.10f,
+            focusedAlpha = 0.12f,
+            draggedAlpha = 0.08f,
+            hoveredAlpha = 0.04f,
+          ),
+          color = colors.primary
+        ),
+        LocalTextStyle provides AppTheme.typography.body.DefaultMedium,
+      ) {
+        content()
+      }
     }
+  }
 }

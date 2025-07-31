@@ -7,7 +7,7 @@ import core.database.RoomDB
 import core.database.di.databaseModule
 import core.datastore.DataStore
 import core.datastore.di.dataStoreModule
-import core.network.PandaRemoteApi
+import core.network.AppRemoteApi
 import core.network.di.networkModule
 
 fun dataModule(): Module = module {
@@ -20,7 +20,7 @@ fun dataModule(): Module = module {
     single<AuthRepository> {
         AuthRepository(
             get<DataStore>(),
-            get<PandaRemoteApi>(),
+            get<AppRemoteApi>(),
             get<RoomDB>(),
         )
     }

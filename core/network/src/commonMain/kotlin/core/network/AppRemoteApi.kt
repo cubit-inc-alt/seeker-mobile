@@ -7,7 +7,7 @@ import core.models.response.RefreshTokenResponse
 import core.network.constants.ApiEndpoints.REFRESH_TOKEN
 import core.network.extensions.get
 
-interface PandaRemoteApi {
+interface AppRemoteApi {
 
     suspend fun refreshToken(
         token: String,
@@ -16,9 +16,9 @@ interface PandaRemoteApi {
 
 }
 
-class PandaRemoteApiImpl private constructor(
+class AppRemoteApiImpl private constructor(
     private val httpClient: HttpClient
-) : PandaRemoteApi {
+) : AppRemoteApi {
 
 
     override suspend fun refreshToken(
@@ -33,7 +33,7 @@ class PandaRemoteApiImpl private constructor(
 
     companion object {
         operator fun invoke(httpClient: HttpClient) = with(httpClient) {
-            PandaRemoteApiImpl(httpClient)
+            AppRemoteApiImpl(httpClient)
         }
     }
 }

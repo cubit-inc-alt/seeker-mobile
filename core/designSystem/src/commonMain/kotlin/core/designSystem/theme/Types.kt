@@ -1,337 +1,349 @@
 package core.designSystem.theme
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
-import androidx.compose.ui.unit.TextUnit
-import core.designSystem.generated.resources.BalooChettan_Regular
-import core.designSystem.generated.resources.NunitoSans_Black
-import core.designSystem.generated.resources.NunitoSans_Bold
-import core.designSystem.generated.resources.NunitoSans_ExtraBold
-import core.designSystem.generated.resources.NunitoSans_ExtraLight
-import core.designSystem.generated.resources.NunitoSans_Light
-import core.designSystem.generated.resources.NunitoSans_Regular
-import core.designSystem.generated.resources.NunitoSans_SemiBold
-import core.designSystem.generated.resources.Quicksand_Regular
-import core.designSystem.generated.resources.Res
-import org.jetbrains.compose.resources.Font
-import core.designSystem.theme.PandaTextSize.size_12
-import core.designSystem.theme.PandaTextSize.size_14
-import core.designSystem.theme.PandaTextSize.size_16
-import core.designSystem.theme.PandaTextSize.size_18
-import core.designSystem.theme.PandaTextSize.size_20
-import core.designSystem.theme.PandaTextSize.size_24
-import core.designSystem.theme.PandaTextSize.size_32
+import core.designSystem.theme.AppTextSize.size_32
+import core.designSystem.theme.AppTextSize.size_36
+import core.designSystem.theme.AppTextSize.size_40
 
-
-val FontFamily.Companion.Nunito: FontFamily
-    @Composable
-    get() = FontFamily(
-        Font(Res.font.NunitoSans_ExtraLight, FontWeight.ExtraLight),
-        Font(Res.font.NunitoSans_Light, FontWeight.Light),
-        Font(Res.font.NunitoSans_Regular, FontWeight.Normal),
-        Font(Res.font.NunitoSans_Black, FontWeight.Black),
-        Font(Res.font.NunitoSans_SemiBold, FontWeight.SemiBold),
-        Font(Res.font.NunitoSans_Bold, FontWeight.Bold),
-        Font(Res.font.NunitoSans_ExtraBold, FontWeight.ExtraBold),
-    )
-
-val FontFamily.Companion.Baloo: FontFamily
-    @Composable
-    get() = FontFamily(
-        Font(Res.font.BalooChettan_Regular, FontWeight.Normal)
-    )
-val FontFamily.Companion.QuickSand: FontFamily
-    @Composable
-    get() = FontFamily(
-        Font(Res.font.Quicksand_Regular, FontWeight.Normal)
-    )
-
-private val lineHeightStyle = LineHeightStyle(
-    alignment = LineHeightStyle.Alignment.Center,
-    trim = LineHeightStyle.Trim.None,
-)
+private val typography: Typography
+  @Composable
+  get() = MaterialTheme.typography
 
 @Composable
-private fun rememberTextStyle(
-    fontSize: TextUnit,
-    fontWeight: FontWeight,
-    fontFamily: FontFamily = FontFamily.Nunito,
-    letterSpacing: TextUnit = TextUnit.Unspecified,
+fun rememberTextStyle(
+  baseStyle: TextStyle,
+  fontWeight: FontWeight,
 ): TextStyle {
-    val colors = AppTheme.colors
-
-    return remember(colors) {
-        TextStyle(
-            fontSize = fontSize,
-            fontFamily = fontFamily,
-            fontWeight = fontWeight,
-            lineHeightStyle = lineHeightStyle,
-            color = colors.onBackground,
-            letterSpacing = letterSpacing,
-        )
-    }
+  return remember(baseStyle, fontWeight) {
+    baseStyle.copy(
+      fontWeight = fontWeight,
+      fontFamily = FontFamily.SansSerif
+    )
+  }
 }
+
 
 @Suppress("PropertyName")
 interface AppTypography {
-    val display: Display
-    val heading: Heading
-    val body: Body
-    val label: Label
+  val display: Display
+  val heading: Heading
+  val body: Body
+  val label: Label
 
-    interface Display {
-        @get:Composable
-        val SmallRegular: TextStyle
+  interface Display {
+    @get:Composable
+    val SmallRegular: TextStyle
 
-        @get:Composable
-        val MediumRegular: TextStyle
+    @get:Composable
+    val DefaultRegular: TextStyle
 
-        @get:Composable
-        val LargeRegular: TextStyle
+    @get:Composable
+    val LargeRegular: TextStyle
 
-        @get:Composable
-        val SmallSemiBold: TextStyle
+    @get:Composable
+    val SmallMedium: TextStyle
 
-        @get:Composable
-        val MediumSemiBold: TextStyle
+    @get:Composable
+    val DefaultMedium: TextStyle
 
-        @get:Composable
-        val LargeSemiBold: TextStyle
+    @get:Composable
+    val LargeMedium: TextStyle
 
-        @get:Composable
-        val SmallBold: TextStyle
+    @get:Composable
+    val SmallSemiBold: TextStyle
 
-        @get:Composable
-        val MediumBold: TextStyle
+    @get:Composable
+    val DefaultSemiBold: TextStyle
 
-        @get:Composable
-        val LargeBold: TextStyle
-    }
+    @get:Composable
+    val LargeSemiBold: TextStyle
 
+    @get:Composable
+    val SmallBold: TextStyle
 
-    interface Heading {
-        @get:Composable
-        val SmallRegular: TextStyle
+    @get:Composable
+    val DefaultBold: TextStyle
 
-        @get:Composable
-        val MediumRegular: TextStyle
+    @get:Composable
+    val LargeBold: TextStyle
+  }
 
-        @get:Composable
-        val LargeRegular: TextStyle
+  interface Heading {
+    @get:Composable
+    val SmallRegular: TextStyle
 
-        @get:Composable
-        val SmallSemiBold: TextStyle
+    @get:Composable
+    val DefaultRegular: TextStyle
 
-        @get:Composable
-        val DefaultSemiBold: TextStyle
+    @get:Composable
+    val LargeRegular: TextStyle
 
-        @get:Composable
-        val LargeSemiBold: TextStyle
+    @get:Composable
+    val SmallMedium: TextStyle
 
-        @get:Composable
-        val SmallBold: TextStyle
+    @get:Composable
+    val DefaultMedium: TextStyle
 
-        @get:Composable
-        val DefaultBold: TextStyle
+    @get:Composable
+    val LargeMedium: TextStyle
 
-        @get:Composable
-        val LargeBold: TextStyle
-    }
+    @get:Composable
+    val SmallSemiBold: TextStyle
 
+    @get:Composable
+    val DefaultSemiBold: TextStyle
 
-    interface Body {
-        @get:Composable
-        val SmallRegular: TextStyle
+    @get:Composable
+    val LargeSemiBold: TextStyle
 
-        @get:Composable
-        val MediumRegular: TextStyle
+    @get:Composable
+    val SmallBold: TextStyle
 
-        @get:Composable
-        val LargeRegular: TextStyle
+    @get:Composable
+    val DefaultBold: TextStyle
 
-        @get:Composable
-        val SmallNormal: TextStyle
+    @get:Composable
+    val LargeBold: TextStyle
+  }
 
-        @get:Composable
-        val MediumNormal: TextStyle
+  interface Body {
+    @get:Composable
+    val SmallRegular: TextStyle
 
-        @get:Composable
-        val LargeNormal: TextStyle
+    @get:Composable
+    val DefaultRegular: TextStyle
 
-        @get:Composable
-        val SmallSemiBold: TextStyle
+    @get:Composable
+    val LargeRegular: TextStyle
 
-        @get:Composable
-        val DefaultSemiBold: TextStyle
+    @get:Composable
+    val SmallMedium: TextStyle
 
-        @get:Composable
-        val LargeSemiBold: TextStyle
+    @get:Composable
+    val DefaultMedium: TextStyle
 
-        @get:Composable
-        val SmallBold: TextStyle
+    @get:Composable
+    val LargeMedium: TextStyle
 
-        @get:Composable
-        val DefaultBold: TextStyle
+    @get:Composable
+    val SmallSemiBold: TextStyle
 
-        @get:Composable
-        val LargeBold: TextStyle
-    }
+    @get:Composable
+    val DefaultSemiBold: TextStyle
 
-    interface Label {
-        @get:Composable
-        val SmallRegular: TextStyle
+    @get:Composable
+    val LargeSemiBold: TextStyle
 
-        @get:Composable
-        val MediumRegular: TextStyle
+    @get:Composable
+    val SmallBold: TextStyle
 
-        @get:Composable
-        val LargeRegular: TextStyle
+    @get:Composable
+    val DefaultBold: TextStyle
 
-        @get:Composable
-        val SmallNormal: TextStyle
+    @get:Composable
+    val LargeBold: TextStyle
+  }
 
-        @get:Composable
-        val MediumNormal: TextStyle
+  interface Label {
+    @get:Composable
+    val SmallRegular: TextStyle
 
-        @get:Composable
-        val LargeNormal: TextStyle
+    @get:Composable
+    val DefaultRegular: TextStyle
 
-        @get:Composable
-        val SmallSemiBold: TextStyle
+    @get:Composable
+    val LargeRegular: TextStyle
 
-        @get:Composable
-        val DefaultSemiBold: TextStyle
+    @get:Composable
+    val SmallMedium: TextStyle
 
-        @get:Composable
-        val LargeSemiBold: TextStyle
+    @get:Composable
+    val DefaultMedium: TextStyle
 
-        @get:Composable
-        val SmallBold: TextStyle
+    @get:Composable
+    val LargeMedium: TextStyle
 
-        @get:Composable
-        val DefaultBold: TextStyle
+    @get:Composable
+    val SmallSemiBold: TextStyle
 
-        @get:Composable
-        val LargeBold: TextStyle
-    }
+    @get:Composable
+    val DefaultSemiBold: TextStyle
 
+    @get:Composable
+    val LargeSemiBold: TextStyle
+
+    @get:Composable
+    val SmallBold: TextStyle
+
+    @get:Composable
+    val DefaultBold: TextStyle
+
+    @get:Composable
+    val LargeBold: TextStyle
+  }
 }
 
-internal object PandaFontTypography : AppTypography {
-    override val display = object : AppTypography.Display {
-        override val SmallRegular @Composable get() = rememberTextStyle(size_18, FontWeight.Normal)
-        override val MediumRegular @Composable get() = rememberTextStyle(size_24, FontWeight.Normal)
-        override val LargeRegular @Composable get() = rememberTextStyle(size_32, FontWeight.Normal)
+internal object BanterChatFlipTypography : AppTypography {
 
-        override val SmallSemiBold
-            @Composable get() = rememberTextStyle(
-                size_18,
-                FontWeight.SemiBold
-            )
-        override val MediumSemiBold
-            @Composable get() = rememberTextStyle(
-                size_24,
-                FontWeight.SemiBold
-            )
-        override val LargeSemiBold
-            @Composable get() = rememberTextStyle(
-                size_32,
-                FontWeight.SemiBold
-            )
+  override val display = object : AppTypography.Display {
+    override val SmallRegular
+      @Composable get() = rememberTextStyle(
+        typography.displaySmall.copy(fontSize = size_32),
+        FontWeight.Normal
+      )
+    override val DefaultRegular
+      @Composable get() = rememberTextStyle(
+        typography.displayMedium.copy(fontSize = size_36),
+        FontWeight.Normal
+      )
+    override val LargeRegular
+      @Composable get() = rememberTextStyle(
+        typography.displayLarge.copy(fontSize = size_40),
+        FontWeight.Normal
+      )
 
-        override val SmallBold @Composable get() = rememberTextStyle(size_18, FontWeight.Bold)
-        override val MediumBold @Composable get() = rememberTextStyle(size_24, FontWeight.Bold)
-        override val LargeBold @Composable get() = rememberTextStyle(size_32, FontWeight.Bold)
-    }
+    override val SmallMedium
+      @Composable get() = rememberTextStyle(
+        typography.displaySmall.copy(fontSize = size_32),
+        FontWeight.Medium
+      )
+    override val DefaultMedium
+      @Composable get() = rememberTextStyle(
+        typography.displayMedium.copy(fontSize = size_36),
+        FontWeight.Medium
+      )
+    override val LargeMedium
+      @Composable get() = rememberTextStyle(
+        typography.displayLarge.copy(fontSize = size_40),
+        FontWeight.Medium
+      )
 
+    override val SmallSemiBold
+      @Composable get() = rememberTextStyle(
+        typography.displaySmall.copy(fontSize = size_32),
+        FontWeight.SemiBold
+      )
+    override val DefaultSemiBold
+      @Composable get() = rememberTextStyle(
+        typography.displayMedium.copy(fontSize = size_36),
+        FontWeight.SemiBold
+      )
+    override val LargeSemiBold
+      @Composable get() = rememberTextStyle(
+        typography.displayLarge.copy(fontSize = size_40),
+        FontWeight.SemiBold
+      )
 
-    override val heading = object : AppTypography.Heading {
-        override val SmallRegular @Composable get() = rememberTextStyle(size_14, FontWeight.Normal)
-        override val MediumRegular @Composable get() = rememberTextStyle(size_16, FontWeight.Normal)
-        override val LargeRegular @Composable get() = rememberTextStyle(size_20, FontWeight.Normal)
+    override val SmallBold
+      @Composable get() = rememberTextStyle(
+        typography.displaySmall.copy(fontSize = size_32),
+        FontWeight.Bold
+      )
+    override val DefaultBold
+      @Composable get() = rememberTextStyle(
+        typography.displayMedium.copy(fontSize = size_36),
+        FontWeight.Bold
+      )
+    override val LargeBold
+      @Composable get() = rememberTextStyle(
+        typography.displayLarge.copy(fontSize = size_40),
+        FontWeight.Bold
+      )
+  }
 
-        override val SmallSemiBold
-            @Composable get() = rememberTextStyle(
-                size_14,
-                FontWeight.SemiBold
-            )
-        override val DefaultSemiBold
-            @Composable get() = rememberTextStyle(
-                size_16,
-                FontWeight.SemiBold
-            )
-        override val LargeSemiBold
-            @Composable get() = rememberTextStyle(
-                size_20,
-                FontWeight.SemiBold
-            )
+  override val heading = object : AppTypography.Heading {
+    override val SmallRegular
+      @Composable get() = rememberTextStyle(typography.titleSmall, FontWeight.Normal)
+    override val DefaultRegular
+      @Composable get() = rememberTextStyle(typography.titleMedium, FontWeight.Normal)
+    override val LargeRegular
+      @Composable get() = rememberTextStyle(typography.titleLarge, FontWeight.Normal)
 
-        override val SmallBold @Composable get() = rememberTextStyle(size_14, FontWeight.Bold)
-        override val DefaultBold @Composable get() = rememberTextStyle(size_16, FontWeight.Bold)
-        override val LargeBold @Composable get() = rememberTextStyle(size_20, FontWeight.Bold)
-    }
+    override val SmallMedium
+      @Composable get() = rememberTextStyle(typography.titleSmall, FontWeight.Medium)
+    override val DefaultMedium
+      @Composable get() = rememberTextStyle(typography.titleMedium, FontWeight.Medium)
+    override val LargeMedium
+      @Composable get() = rememberTextStyle(typography.titleLarge, FontWeight.Medium)
 
-    override val body: AppTypography.Body = object : AppTypography.Body {
-        override val SmallRegular @Composable get() = rememberTextStyle(size_12, FontWeight.Normal)
-        override val MediumRegular @Composable get() = rememberTextStyle(size_14, FontWeight.Normal)
-        override val LargeRegular @Composable get() = rememberTextStyle(size_16, FontWeight.Normal)
+    override val SmallSemiBold
+      @Composable get() = rememberTextStyle(typography.titleSmall, FontWeight.SemiBold)
+    override val DefaultSemiBold
+      @Composable get() = rememberTextStyle(typography.titleMedium, FontWeight.SemiBold)
+    override val LargeSemiBold
+      @Composable get() = rememberTextStyle(typography.titleLarge, FontWeight.SemiBold)
 
-        override val SmallNormal @Composable get() = SmallRegular
-        override val MediumNormal @Composable get() = MediumRegular
-        override val LargeNormal @Composable get() = LargeRegular
+    override val SmallBold
+      @Composable get() = rememberTextStyle(typography.titleSmall, FontWeight.Bold)
+    override val DefaultBold
+      @Composable get() = rememberTextStyle(typography.titleMedium, FontWeight.Bold)
+    override val LargeBold
+      @Composable get() = rememberTextStyle(typography.titleLarge, FontWeight.Bold)
+  }
 
-        override val SmallSemiBold
-            @Composable get() = rememberTextStyle(
-                size_12,
-                FontWeight.SemiBold
-            )
-        override val DefaultSemiBold
-            @Composable get() = rememberTextStyle(
-                size_14,
-                FontWeight.SemiBold
-            )
-        override val LargeSemiBold
-            @Composable get() = rememberTextStyle(
-                size_16,
-                FontWeight.SemiBold
-            )
+  override val body = object : AppTypography.Body {
+    override val SmallRegular
+      @Composable get() = rememberTextStyle(typography.bodySmall, FontWeight.Normal)
+    override val DefaultRegular
+      @Composable get() = rememberTextStyle(typography.bodyMedium, FontWeight.Normal)
+    override val LargeRegular
+      @Composable get() = rememberTextStyle(typography.bodyLarge, FontWeight.Normal)
 
-        override val SmallBold @Composable get() = rememberTextStyle(size_12, FontWeight.Bold)
-        override val DefaultBold @Composable get() = rememberTextStyle(size_14, FontWeight.Bold)
-        override val LargeBold @Composable get() = rememberTextStyle(size_16, FontWeight.Bold)
-    }
-    override val label: AppTypography.Label = object : AppTypography.Label {
-        override val SmallRegular @Composable get() = rememberTextStyle(size_12, FontWeight.Normal)
-        override val MediumRegular @Composable get() = rememberTextStyle(size_14, FontWeight.Normal)
-        override val LargeRegular @Composable get() = rememberTextStyle(size_16, FontWeight.Normal)
+    override val SmallMedium
+      @Composable get() = rememberTextStyle(typography.bodySmall, FontWeight.Medium)
+    override val DefaultMedium
+      @Composable get() = rememberTextStyle(typography.bodyMedium, FontWeight.Medium)
+    override val LargeMedium
+      @Composable get() = rememberTextStyle(typography.bodyLarge, FontWeight.Medium)
 
-        override val SmallNormal @Composable get() = SmallRegular
-        override val MediumNormal @Composable get() = MediumRegular
-        override val LargeNormal @Composable get() = LargeRegular
+    override val SmallSemiBold
+      @Composable get() = rememberTextStyle(typography.bodySmall, FontWeight.SemiBold)
+    override val DefaultSemiBold
+      @Composable get() = rememberTextStyle(typography.bodyMedium, FontWeight.SemiBold)
+    override val LargeSemiBold
+      @Composable get() = rememberTextStyle(typography.bodyLarge, FontWeight.SemiBold)
 
-        override val SmallSemiBold
-            @Composable get() = rememberTextStyle(
-                size_12,
-                FontWeight.SemiBold
-            )
-        override val DefaultSemiBold
-            @Composable get() = rememberTextStyle(
-                size_14,
-                FontWeight.SemiBold
-            )
-        override val LargeSemiBold
-            @Composable get() = rememberTextStyle(
-                size_16,
-                FontWeight.SemiBold
-            )
+    override val SmallBold
+      @Composable get() = rememberTextStyle(typography.bodySmall, FontWeight.Bold)
+    override val DefaultBold
+      @Composable get() = rememberTextStyle(typography.bodyMedium, FontWeight.Bold)
+    override val LargeBold
+      @Composable get() = rememberTextStyle(typography.bodyLarge, FontWeight.Bold)
+  }
 
-        override val SmallBold @Composable get() = rememberTextStyle(size_12, FontWeight.Bold)
-        override val DefaultBold @Composable get() = rememberTextStyle(size_14, FontWeight.Bold)
-        override val LargeBold @Composable get() = rememberTextStyle(size_16, FontWeight.Bold)
-    }
+  override val label = object : AppTypography.Label {
+    override val SmallRegular
+      @Composable get() = rememberTextStyle(typography.labelSmall, FontWeight.Normal)
+    override val DefaultRegular
+      @Composable get() = rememberTextStyle(typography.labelMedium, FontWeight.Normal)
+    override val LargeRegular
+      @Composable get() = rememberTextStyle(typography.labelLarge, FontWeight.Normal)
 
+    override val SmallMedium
+      @Composable get() = rememberTextStyle(typography.labelSmall, FontWeight.Medium)
+    override val DefaultMedium
+      @Composable get() = rememberTextStyle(typography.labelMedium, FontWeight.Medium)
+    override val LargeMedium
+      @Composable get() = rememberTextStyle(typography.labelLarge, FontWeight.Medium)
+
+    override val SmallSemiBold
+      @Composable get() = rememberTextStyle(typography.labelSmall, FontWeight.SemiBold)
+    override val DefaultSemiBold
+      @Composable get() = rememberTextStyle(typography.labelMedium, FontWeight.SemiBold)
+    override val LargeSemiBold
+      @Composable get() = rememberTextStyle(typography.labelLarge, FontWeight.SemiBold)
+
+    override val SmallBold
+      @Composable get() = rememberTextStyle(typography.labelSmall, FontWeight.Bold)
+    override val DefaultBold
+      @Composable get() = rememberTextStyle(typography.labelMedium, FontWeight.Bold)
+    override val LargeBold
+      @Composable get() = rememberTextStyle(typography.labelLarge, FontWeight.Bold)
+  }
 }

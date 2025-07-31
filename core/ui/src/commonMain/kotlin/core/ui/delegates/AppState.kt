@@ -7,7 +7,7 @@ import kotlin.native.HiddenFromObjC
 
 sealed interface AppState<T> : StateFlow<T>
 
-internal class PandaStateImpl<T>(
+internal class AppStateImpl<T>(
     delegate: MutableStateFlow<T>,
 ) : MutableStateFlow<T> by delegate, AppState<T>
 
@@ -15,16 +15,16 @@ internal class PandaStateImpl<T>(
  * Creates a new [AppState] which is a [MutableStateFlow] but restricts the update to [ViewModel] scope
  */
 @HiddenFromObjC
-fun <T> stateOf(initial: T): AppState<T> = PandaStateImpl(MutableStateFlow(initial))
+fun <T> stateOf(initial: T): AppState<T> = AppStateImpl(MutableStateFlow(initial))
 
 @HiddenFromObjC
 fun <T> AppState<T>.update(block: T.() -> T) {
-    (this as PandaStateImpl<T>).value = block(value)
+    (this as AppStateImpl<T>).value = block(value)
 }
 
 @HiddenFromObjC
 fun <T> AppState<T>.setValue(value: T) {
-    (this as PandaStateImpl<T>).value = value
+    (this as AppStateImpl<T>).value = value
 }
 
 fun <T> MutableStateFlow<T>.setValue(value: T) {
