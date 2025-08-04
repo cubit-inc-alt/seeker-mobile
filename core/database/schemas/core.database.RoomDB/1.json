@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8d38414cfce6d189bc156af128b6e6e9",
+    "identityHash": "86c210fdfb86d69e3a6113dc12be4c9f",
     "entities": [
       {
-        "tableName": "TestItemEntity",
+        "tableName": "ChatRoomEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `value` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -31,7 +31,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d38414cfce6d189bc156af128b6e6e9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '86c210fdfb86d69e3a6113dc12be4c9f')"
     ]
   }
 }

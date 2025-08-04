@@ -7,6 +7,7 @@ import app.namespace
 plugins {
   alias(libs.plugins.android.app)
   alias(libs.plugins.compose.compiler)
+  alias(libs.plugins.googleServices)
 }
 
 android {
@@ -76,6 +77,7 @@ dependencies {
   implementation(libs.androidx.activity.compose)
   implementation(projects.core.app)
   implementation(projects.core.common)
+  implementation(projects.core.firestore)
   implementation(libs.koin.core)
   implementation(libs.koin.android)
 }

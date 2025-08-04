@@ -15,6 +15,7 @@ ksp = "2.1.0-1.0.29"
 
 # Others
 buildkonfig = "0.15.1"
+googleServices = "4.4.3"
 
 # Code Improvements
 klint-plugin = "12.1.1"
@@ -59,6 +60,7 @@ playServicesMaps = "18.2.0"
 # Others
 kotlinx-serilization-json = "1.7.0"
 kotlinx-datetime = "0.6.0"
+firebaseCommonKtx = "34.0.0"
 
 # Logging
 napier = "2.7.1"
@@ -76,6 +78,7 @@ composeBom = "2024.09.00"
 
 [libraries]
 # Core
+
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 buildkonfigCompiler = { module = "com.codingfeline.buildkonfig:buildkonfig-compiler", version.ref = "buildkonfig" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines-core" }
@@ -134,6 +137,8 @@ koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 # Others
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serilization-json" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseCommonKtx" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
 
 # Logging
 napier = { module = "io.github.aakira:napier", version.ref = "napier" }
@@ -166,6 +171,7 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrai
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 android-room = { id = "androidx.room", version.ref = "room" }
 buildkonfig = { id = "com.codingfeline.buildkonfig", version.ref = "buildkonfig" }
+googleServices = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 
 # Others
 kotlinx-serilization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

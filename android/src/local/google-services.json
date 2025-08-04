@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "266364559184",
+    "project_id": "banter-web3-dev",
+    "storage_bucket": "banter-web3-dev.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266364559184:android:acddfaf259381ae9115655",
+        "android_client_info": {
+          "package_name": "np.com.cubit.app.banter.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJfkR5eK2bhMgdKs4TkFarzb0QzaIhZHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266364559184:android:fe095913c548c955115655",
+        "android_client_info": {
+          "package_name": "np.com.cubit.app.banter.local"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJfkR5eK2bhMgdKs4TkFarzb0QzaIhZHQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

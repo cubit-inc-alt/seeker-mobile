@@ -40,7 +40,7 @@ fun AppUI(viewModel: AppUIViewModel) {
           navController = navigator, startDestination = AppNavigation.ChatScreen
         ) {
           composable<AppNavigation.ChatScreen> {
-            MainBottomNavScreen {}
+            MainBottomNavScreen() {}
           }
         }
       }

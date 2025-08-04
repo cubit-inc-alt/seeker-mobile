@@ -10,6 +10,7 @@
 
 APP_DISPLAY_NAME = $appName Dev
 APP_ICON = AppIconDev
-BUNDLE_IDENTIFIER_SUFFIX = .development
+BUNDLE_IDENTIFIER_SUFFIX = .dev
 
 ENVIRONMENT = development
+FIREBASE_CONFIG_FILE = GoogleService-Info-Dev

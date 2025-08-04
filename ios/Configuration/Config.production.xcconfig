@@ -11,3 +11,4 @@
 ENVIRONMENT = production
 APP_DISPLAY_NAME = $appName
 APP_ICON = AppIcon
+FIREBASE_CONFIG_FILE = GoogleService-Info-Dev

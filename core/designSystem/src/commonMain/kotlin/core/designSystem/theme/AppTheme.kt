@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTheme(
-  userThemeMode: UserThemeMode = UserThemeMode.System,
+  userThemeMode: UserThemeMode = UserThemeMode.Light,
   content: @Composable () -> Unit
 ) {
   val isSystemInDarkTheme = isSystemInDarkTheme()

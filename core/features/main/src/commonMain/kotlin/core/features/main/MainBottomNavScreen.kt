@@ -3,10 +3,8 @@ package core.features.main
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -33,95 +31,94 @@ import org.koin.compose.koinInject
 
 @Composable
 fun MainBottomNavScreen(
-    navigateToNext: (AppNavigation) -> Unit,
+  navigateToNext: (AppNavigation) -> Unit,
 ) {
-    val navController = rememberNavController()
+  val navController = rememberNavController()
 
-    Scaffold(
-        bottomBar = {
-            Column {
-                HorizontalDivider()
+  Scaffold(
+    bottomBar = {
+      Column {
+        HorizontalDivider()
 
-                NavigationBar(containerColor = Color.White) {
-                    val currentBackStackEntry = navController.currentBackStackEntryAsState().value
-                    val currentRoute = currentBackStackEntry?.destination?.route
+        NavigationBar(containerColor = Color.White) {
+          val currentBackStackEntry = navController.currentBackStackEntryAsState().value
+          val currentRoute = currentBackStackEntry?.destination?.route
 
-                    bottomNavItems.forEach { item ->
-                        NavigationBarItem(
-                            selected = currentRoute == item.route.toString(),
-                            onClick = {
-                                if (currentRoute != item.route.toString()) {
-                                    navController.navigate(item.route.toString()) {
-                                        popUpTo(navController.graph.startDestinationId) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                            },
-                            icon = {
-                                Icon(
-                                    painter = painterResource(item.icon),
-                                    contentDescription = stringResource(item.label)
-                                )
-                            },
-                            label = {
-                                Text(
-                                    stringResource(item.label),
-                                    style = typography.label.SmallSemiBold
-                                )
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                indicatorColor = Color.Transparent, selectedIconColor = Color.Black,
-                            ),
-                        )
-                    }
+          bottomNavItems.forEach { item ->
+            NavigationBarItem(
+              selected = currentRoute == item.route.toString(),
+              onClick = {
+                if (currentRoute != item.route.toString()) {
+                  navController.navigate(item.route.toString()) {
+//                    popUpTo(navController.graph.startDestinationRoute) {
+//                      saveState = true
+//                    }
+
+                    launchSingleTop = true
+                    restoreState = true
+                  }
                 }
-            }
-        }, containerColor = Color.White
-    ) { padding ->
-
-        NavHost(
-            navController = navController,
-            startDestination = BottomNavItem.Forum.route.toString(),
-            modifier = Modifier.fillMaxSize().padding(bottom = padding.calculateBottomPadding())
-                .background(Color.White),
-            enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(500)
+              },
+              icon = {
+                Icon(
+                  painter = painterResource(item.icon),
+                  contentDescription = stringResource(item.label)
                 )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(500)
+              },
+              label = {
+                Text(
+                  stringResource(item.label),
+                  style = typography.label.SmallSemiBold
                 )
-            },
-            popEnterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(500)
-                )
-            },
-            popExitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(500)
-                )
-            }
-        ) {
-            composable(BottomNavItem.Forum.route.toString()) {
-                ChatScreen(koinInject()) {
-                    navigateToNext(it)
-                }
-
-
-            }
-            composable(BottomNavItem.CoinFlip.route.toString()) {
-
-            }
+              },
+              colors = NavigationBarItemDefaults.colors(
+                indicatorColor = Color.Transparent, selectedIconColor = Color.Black,
+              ),
+            )
+          }
         }
+      }
+    }, containerColor = Color.White
+  ) { padding ->
+
+    NavHost(
+      navController = navController,
+      startDestination = BottomNavItem.Forum.route.toString(),
+      modifier = Modifier.fillMaxSize().padding(bottom = padding.calculateBottomPadding())
+        .background(Color.White),
+      enterTransition = {
+        slideIntoContainer(
+          AnimatedContentTransitionScope.SlideDirection.Left,
+          animationSpec = tween(500)
+        )
+      },
+      exitTransition = {
+        slideOutOfContainer(
+          AnimatedContentTransitionScope.SlideDirection.Left,
+          animationSpec = tween(500)
+        )
+      },
+      popEnterTransition = {
+        slideIntoContainer(
+          AnimatedContentTransitionScope.SlideDirection.Right,
+          animationSpec = tween(500)
+        )
+      },
+      popExitTransition = {
+        slideOutOfContainer(
+          AnimatedContentTransitionScope.SlideDirection.Right,
+          animationSpec = tween(500)
+        )
+      }
+    ) {
+      composable(BottomNavItem.Forum.route.toString()) {
+        ChatScreen(koinInject()) {
+          navigateToNext(it)
+        }
+      }
+      composable(BottomNavItem.CoinFlip.route.toString()) {
+
+      }
     }
+  }
 }

@@ -16,6 +16,7 @@ fun KotlinNativeTarget.configureBinary() {
 
         export(projects.core.app)
         export(projects.core.ui)
+        export(projects.core.firestore)
     }
 }
 

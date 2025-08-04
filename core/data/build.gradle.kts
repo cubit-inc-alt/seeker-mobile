@@ -13,6 +13,7 @@ kotlin {
             implementation(projects.core.network)
             api(projects.core.models)
             implementation(projects.core.resources)
+            implementation(projects.core.firestore)
         }
     }
 }

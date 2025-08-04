@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import core.common.getRelativeTimeString
 import core.common.maskString
 import core.designSystem.theme.AppDimensions.size_10
 import core.designSystem.theme.AppDimensions.size_12
@@ -38,20 +37,27 @@ import core.designSystem.theme.AppDimensions.size_4
 import core.designSystem.theme.AppDimensions.size_6
 import core.designSystem.theme.AppDimensions.size_8
 import core.designSystem.theme.AppTheme.typography
+import core.features.chat.relativeTime
 import core.resources.generated.resources.Res
 import core.resources.generated.resources.chat_triangle_head
 import core.ui.rememberMutableStateOf
-import kotlinx.datetime.Month
+import kotlinx.datetime.Instant
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ChatSentCard(
   modifier: Modifier,
-  id: String, dateTime: Long, message: String, isLiked: Boolean, likes: Int, onLikeClicked: (String) -> Unit
+  id: String,
+  dateTime: Instant,
+  message: String,
+  isLiked: Boolean,
+  likes: Int,
+  onLikeClicked: (String) -> Unit
 ) {
   var formattedDate by rememberMutableStateOf("")
+
   LaunchedEffect(dateTime) {
-    formattedDate = getRelativeTimeString(dateTime)
+    formattedDate = dateTime.relativeTime()
   }
 
   Row(modifier.height(IntrinsicSize.Max), horizontalArrangement = Arrangement.End) {

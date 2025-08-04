@@ -14,3 +14,4 @@ APP_ICON = AppIconLocal
 BUNDLE_IDENTIFIER_SUFFIX = .local
 
 ENVIRONMENT = local
+FIREBASE_CONFIG_FILE = GoogleService-Info-Local

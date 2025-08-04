@@ -43,7 +43,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import core.designSystem.elements.SimpleOutlinedTextField
 import core.designSystem.theme.AppDimensions.size_12
 import core.designSystem.theme.AppDimensions.size_16
@@ -75,213 +74,213 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ChatScreen(
-    viewModel: ChatViewModel, navigateToNext: (AppNavigation) -> Unit
+  viewModel: ChatViewModel,
+  navigateToNext: (AppNavigation) -> Unit
 ) {
-    val state by viewModel.state.collectAsState()
-    val chatList by viewModel.chatList.collectAsState()
-    val newChatList by viewModel.newChatList.collectAsState()
-    val remainingTime by viewModel.remainingTime.collectAsState()
-    var inputMessage by rememberMutableStateOf("")
-    var showTimeWarning by rememberMutableStateOf<Boolean?>(false)
+  val state by viewModel.state.collectAsState()
+  val chatList by viewModel.messages.collectAsState()
+  val remainingTime by viewModel.remainingTime.collectAsState()
+  var inputMessage by rememberMutableStateOf("")
+  var showTimeWarning by rememberMutableStateOf<Boolean?>(false)
 
-    val focusManager = LocalFocusManager.current
-    LaunchedEffect(state.sendMessageEnable) {
-        state.sendMessageEnable.actUpOn {
-            showTimeWarning = !it
-        }
+  val focusManager = LocalFocusManager.current
+  LaunchedEffect(state.sendMessageEnable) {
+    state.sendMessageEnable.actUpOn {
+      showTimeWarning = !it
     }
+  }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize().clickable(
-            interactionSource = null, indication = null,
-            onClick = {
-                focusManager.clearFocus()
-            }
-        ),
-        containerColor = Color.Transparent, bottomBar = {
-            val imePadding = WindowInsets.ime.getBottom(LocalDensity.current)
-            val showExtraPadding = imePadding > with(LocalDensity.current) { 100.dp.toPx() }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(bottom = if (showExtraPadding) size_20 else 0.dp)
-            ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth().height(size_12).background(Color.Transparent)
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(
-                                    Color.Transparent, Color.Black.copy(alpha = 0.04f)
-                                )
-                            )
-                        )
+  Scaffold(
+    modifier = Modifier,
+    containerColor = Color.Transparent, bottomBar = {
+      val imePadding = WindowInsets.ime.getBottom(LocalDensity.current)
+      val showExtraPadding = imePadding > with(LocalDensity.current) { 100.dp.toPx() }
+
+      Column(
+        modifier = Modifier
+          .fillMaxWidth()
+          .wrapContentHeight()
+          .padding(bottom = if (showExtraPadding) size_20 else 0.dp)
+      ) {
+        Box(
+          modifier = Modifier.fillMaxWidth().height(size_12).background(Color.Transparent)
+            .background(
+              Brush.verticalGradient(
+                colors = listOf(
+                  Color.Transparent, Color.Black.copy(alpha = 0.04f)
                 )
-                if (showTimeWarning == true) {
-                    Row(
-                        Modifier.fillMaxWidth().wrapContentHeight().padding(size_16),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(size_16)
-                    ) {
-                        Icon(
-                            painter = painterResource(Res.drawable.ic_info),
-                            contentDescription = "",
-                            modifier = Modifier.wrapContentHeight(),
-                        )
-                        Text(
-                            stringResource(Res.string.post_restriction_notice),
-                            style = typography.body.SmallRegular,
-                            color = colors.secondary,
-                            modifier = Modifier.weight(1f),
-                            textAlign = TextAlign.Center,
-                            overflow = TextOverflow.Ellipsis,
-                            maxLines = 1
-                        )
-
-                        Icon(
-                            painter = painterResource(Res.drawable.ic_close),
-                            contentDescription = "",
-                            modifier = Modifier.wrapContentHeight()
-                                .clickable { showTimeWarning = null },
-                        )
-                    }
-                    HorizontalDivider()
-                }
-                Row(
-                    Modifier.fillMaxWidth().wrapContentHeight()
-                        .padding(vertical = size_20, horizontal = size_16),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(size_16)
-                ) {
-
-
-                    SimpleOutlinedTextField(
-                        value = inputMessage,
-                        label = null,
-                        hint = if (showTimeWarning != false)
-                            stringResource(resource = Res.string.you_can_message_again_in) + " $remainingTime s"
-                        else stringResource(Res.string.send_message),
-                        onValueChange = {
-                            inputMessage = it
-                        },
-                        enabled = showTimeWarning == false,
-                        modifier = Modifier.weight(1f).wrapContentHeight(),
-                        trailingIcon = {
-                            Icon(
-                                painter = painterResource(Res.drawable.ic_speech_recognization),
-                                contentDescription = "",
-                                Modifier.clickable {
-                                })
-                        },
-                    )
-                    Image(
-                        painter = if (inputMessage.isNotEmpty()) painterResource(Res.drawable.ic_send_enabled) else painterResource(
-                            Res.drawable.ic_send
-                        ),
-                        contentDescription = "",
-                        modifier = Modifier.clickable {
-                            if (inputMessage.isNotEmpty())
-                                viewModel.sendMessage(inputMessage)
-                            inputMessage = ""
-                        })
-
-                }
-            }
-        }) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(it)
-        ) {
-            Row(
-                Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = size_16)
-                    .padding(bottom = size_16),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(Modifier.size(size_30).clip(CircleShape).background(Color(0xFF6B7280)))
-                Text(
-                    stringResource(Res.string.seeker),
-                    style = typography.heading.LargeSemiBold,
-                    modifier = Modifier.padding(start = size_6)
-                )
-                Text(
-                    state.id,
-                    modifier = Modifier.padding(horizontal = size_12).weight(1f),
-                    textAlign = TextAlign.End
-                )
-                Image(
-                    painter = painterResource(Res.drawable.ic_achievement),
-                    contentDescription = ""
-                )
-            }
-
-
-            var selectedTabIndex by rememberMutableStateOf(0)
-            val pagerState = rememberPagerState(initialPage = 0, pageCount = { 2 })
-            val tabs = listOf(
-                stringResource(Res.string.banter),
-                stringResource(Res.string.forum),
+              )
             )
-            val coroutineScope = rememberCoroutineScope()
-            LaunchedEffect(pagerState.currentPage) {
-                selectedTabIndex = pagerState.currentPage
-            }
-            TabRow(
-                modifier = Modifier.fillMaxWidth().wrapContentHeight()
-                    .padding(horizontal = size_16, vertical = size_12)
-                    .clip(RoundedCornerShape(size_26)).background(Color(0xFFF3F4F6)),
-                selectedTabIndex = selectedTabIndex,
-                containerColor = Color.Transparent,
-                contentColor = Color.Black,
-                divider = { null },
-                indicator = { null }) {
-                tabs.forEachIndexed { index, title ->
-                    Tab(
-                        modifier = Modifier.wrapContentSize().padding(size_4).clip(
-                            shape = RoundedCornerShape(size_26),
-                        )
-                            .background(if (selectedTabIndex == index) Color.White else Color.Transparent),
-                        interactionSource = null,
-                        selected = selectedTabIndex == index,
-                        onClick = {
-                            selectedTabIndex = index
-                            coroutineScope.launch {
-                                pagerState.scrollToPage(index)
-                            }
+        )
+        if (showTimeWarning == true) {
+          Row(
+            Modifier.fillMaxWidth().wrapContentHeight().padding(size_16),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(size_16)
+          ) {
+            Icon(
+              painter = painterResource(Res.drawable.ic_info),
+              contentDescription = "",
+              modifier = Modifier.wrapContentHeight(),
+            )
+            Text(
+              stringResource(Res.string.post_restriction_notice),
+              style = typography.body.SmallRegular,
+              color = colors.secondary,
+              modifier = Modifier.weight(1f),
+              textAlign = TextAlign.Center,
+              overflow = TextOverflow.Ellipsis,
+              maxLines = 1
+            )
 
-                        },
-                        text = {
-                            Text(
-                                text = title,
-                                style = typography.heading.DefaultSemiBold,
-                                color = if (selectedTabIndex == index) LocalContentColor.current else colors.secondary
-
-                            )
-                        },
-                    )
-                }
-
-            }
-
-
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(start = size_16)
-            ) { page ->
-
-                when (page) {
-                    0 -> {
-                        ChatListView(chatList, newChatList) {
-                            viewModel.likeChat(it)
-                        }
-                    }
-
-                    else -> {
-
-                    }
-
-                }
-            }
+            Icon(
+              painter = painterResource(Res.drawable.ic_close),
+              contentDescription = "",
+              modifier = Modifier.wrapContentHeight()
+                .clickable { showTimeWarning = null },
+            )
+          }
+          HorizontalDivider()
         }
+        Row(
+          Modifier.fillMaxWidth().wrapContentHeight()
+            .padding(vertical = size_20, horizontal = size_16),
+          verticalAlignment = Alignment.CenterVertically,
+          horizontalArrangement = Arrangement.spacedBy(size_16)
+        ) {
+
+
+          SimpleOutlinedTextField(
+            value = inputMessage,
+            label = null,
+            hint = if (showTimeWarning != false)
+              stringResource(resource = Res.string.you_can_message_again_in) + " $remainingTime s"
+            else stringResource(Res.string.send_message),
+            onValueChange = {
+              inputMessage = it
+            },
+            enabled = showTimeWarning == false,
+            modifier = Modifier.weight(1f).wrapContentHeight(),
+            trailingIcon = {
+              Icon(
+                painter = painterResource(Res.drawable.ic_speech_recognization),
+                contentDescription = "",
+                Modifier.clickable {
+                })
+            },
+          )
+          Image(
+            painter = if (inputMessage.isNotEmpty()) painterResource(Res.drawable.ic_send_enabled) else painterResource(
+              Res.drawable.ic_send
+            ),
+            contentDescription = "",
+            modifier = Modifier.clickable {
+              if (inputMessage.isNotEmpty())
+                viewModel.sendMessage(inputMessage)
+              inputMessage = ""
+            })
+
+        }
+      }
+    }) { paddingValues ->
+    Column(
+      modifier = Modifier.fillMaxSize().padding(paddingValues)
+    ) {
+      Row(
+        Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = size_16)
+          .padding(bottom = size_16),
+        verticalAlignment = Alignment.CenterVertically
+      ) {
+        Box(Modifier.size(size_30).clip(CircleShape).background(Color(0xFF6B7280)))
+        Text(
+          stringResource(Res.string.seeker),
+          style = typography.heading.LargeSemiBold,
+          modifier = Modifier.padding(start = size_6)
+        )
+
+        Text(
+          state.user ?: "",
+          modifier = Modifier.padding(horizontal = size_12).weight(1f),
+          textAlign = TextAlign.End
+        )
+
+        Image(
+          painter = painterResource(Res.drawable.ic_achievement),
+          contentDescription = ""
+        )
+      }
+
+
+      var selectedTabIndex by rememberMutableStateOf(0)
+      val pagerState = rememberPagerState(initialPage = 0, pageCount = { 2 })
+      val tabs = listOf(
+        stringResource(Res.string.banter),
+        stringResource(Res.string.forum),
+      )
+      val coroutineScope = rememberCoroutineScope()
+      LaunchedEffect(pagerState.currentPage) {
+        selectedTabIndex = pagerState.currentPage
+      }
+      TabRow(
+        modifier = Modifier.fillMaxWidth().wrapContentHeight()
+          .padding(horizontal = size_16, vertical = size_12)
+          .clip(RoundedCornerShape(size_26)).background(Color(0xFFF3F4F6)),
+        selectedTabIndex = selectedTabIndex,
+        containerColor = Color.Transparent,
+        contentColor = Color.Black,
+        divider = { null },
+        indicator = { null }) {
+        tabs.forEachIndexed { index, title ->
+          Tab(
+            modifier = Modifier.wrapContentSize().padding(size_4).clip(
+              shape = RoundedCornerShape(size_26),
+            )
+              .background(if (selectedTabIndex == index) Color.White else Color.Transparent),
+            interactionSource = null,
+            selected = selectedTabIndex == index,
+            onClick = {
+              selectedTabIndex = index
+              coroutineScope.launch {
+                pagerState.scrollToPage(index)
+              }
+
+            },
+            text = {
+              Text(
+                text = title,
+                style = typography.heading.DefaultSemiBold,
+                color = if (selectedTabIndex == index) LocalContentColor.current else colors.secondary
+
+              )
+            },
+          )
+        }
+      }
+
+
+      HorizontalPager(
+        state = pagerState,
+        modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(start = size_16)
+      ) { page ->
+
+        when (page) {
+          0 -> {
+            ChatListView(
+              loggedInUserId = viewModel.userId,
+              chatList
+            ) {
+              viewModel.likeChat(it)
+            }
+          }
+
+          else -> {
+
+          }
+
+        }
+      }
     }
+  }
 }
 
