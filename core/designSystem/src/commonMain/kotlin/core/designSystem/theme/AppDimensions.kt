@@ -44,7 +44,7 @@ expect object AppDimensions {
 expect fun scaleDp(value: Float): Dp
 expect fun scaleSp(value: Float): TextUnit
 
-expect object PandaTextSize {
+expect object AppTextSize {
     val size_8: TextUnit
     val size_10: TextUnit
     val size_12: TextUnit

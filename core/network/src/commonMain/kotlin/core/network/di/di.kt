@@ -7,8 +7,8 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import core.datastore.DataStore
 import core.network.BearerTokenRefresher
-import core.network.PandaRemoteApi
-import core.network.PandaRemoteApiImpl
+import core.network.AppRemoteApi
+import core.network.AppRemoteApiImpl
 
 import core.network.baseHttpClient
 import core.network.buildAuthHttpClient
@@ -32,8 +32,8 @@ fun networkModule(): Module = module {
         buildAuthHttpClient(get<HttpClient>(named(Named.HttpClient.base)), get<DataStore>())
     }
 
-    single<PandaRemoteApi> {
-        PandaRemoteApiImpl(get<HttpClient>(named(Named.HttpClient.auth)))
+    single<AppRemoteApi> {
+        AppRemoteApiImpl(get<HttpClient>(named(Named.HttpClient.auth)))
     }
 
     singleOf(::BearerTokenRefresher)

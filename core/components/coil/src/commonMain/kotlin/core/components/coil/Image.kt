@@ -60,7 +60,7 @@ fun LazyImage(
             ) {
                 Text(
                     text = initials?.uppercase() ?: "",
-                    style = AppTheme.typography.body.MediumNormal,
+                    style = AppTheme.typography.body.DefaultMedium,
                     color = textColor
                 )
             }

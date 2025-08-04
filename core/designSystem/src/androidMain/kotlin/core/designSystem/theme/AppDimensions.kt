@@ -42,7 +42,7 @@ actual object AppDimensions {
 }
 
 
-actual object PandaTextSize {
+actual object AppTextSize {
     actual val size_8 = 8.sp
     actual val size_10 = 10.sp
     actual val size_12 = 12.sp

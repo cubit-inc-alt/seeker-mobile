@@ -1,3 +1,3 @@
 ## `:core:network`
 
-Network layer for Panda.
+Network layer for App.

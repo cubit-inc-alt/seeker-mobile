@@ -1,3 +1,3 @@
 ## `:core:datastore`
 
-Persistent key value store for Panda
+Persistent key value store for App

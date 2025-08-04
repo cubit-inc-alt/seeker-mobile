@@ -66,18 +66,18 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7555FF7A242A565900829871"
-            BuildableName = "Panda.app"
-            BlueprintName = "Panda"
-            ReferencedContainer = "container:Panda.xcodeproj">
+            BuildableName = "App.app"
+            BlueprintName = "App"
+            ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7555FF7A242A565900829871"
-            BuildableName = "Panda.app"
-            BlueprintName = "Panda"
-            ReferencedContainer = "container:Panda.xcodeproj">
+            BuildableName = "App.app"
+            BlueprintName = "App"
+            ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

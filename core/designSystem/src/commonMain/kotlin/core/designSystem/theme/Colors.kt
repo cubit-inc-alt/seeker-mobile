@@ -53,9 +53,9 @@ interface AppColors {
     val surfaceContainerLowest: Color
 
     companion object Companion {
-        val light: AppColors = PandaLightColors
-        val dark: AppColors = PandaLightColors
-        val black: AppColors = PandaLightColors
+        val light: AppColors = AppLightColors
+        val dark: AppColors = AppLightColors
+        val black: AppColors = AppLightColors
         val primary10: Color = Color(0xFF101649)
         val primary20: Color = Color(0xFF1D256B)
         val primary30: Color = Color(0xFF2D378D)
@@ -117,7 +117,7 @@ interface AppColors {
     }
 }
 
-private object PandaLightColors : AppColors {
+private object AppLightColors : AppColors {
     override val primary: Color get() = appColorScheme.primary
     override val onPrimary: Color get() = appColorScheme.onPrimary
     override val primaryContainer: Color get() = appColorScheme.primaryContainer

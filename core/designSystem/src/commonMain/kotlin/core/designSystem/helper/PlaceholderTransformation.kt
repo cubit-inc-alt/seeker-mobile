@@ -9,7 +9,7 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
 import core.designSystem.theme.AppColors
-import core.designSystem.theme.PandaTextSize.size_16
+import core.designSystem.theme.AppTextSize.size_16
 
 class PlaceholderTransformation(private val placeholder: String) : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
